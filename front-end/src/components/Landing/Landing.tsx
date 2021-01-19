@@ -7,13 +7,13 @@ import {Carousel,Container} from 'react-bootstrap'
 function Landing() {
     return (
         
-        <Container>
+        <div className='container-xxl container-fluid' >
             <Carousel className='mb-4'>
                     <Carousel.Item>
                     <img
-                    className="d-block w-100"
-                    src="https://images.pexels.com/photos/1114376/pexels-photo-1114376.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    alt="Deals"
+                        className="d-block w-100"
+                        src="https://images.pexels.com/photos/1114376/pexels-photo-1114376.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                        alt="Deals"
                     />
                     <Carousel.Caption>
                         <h3>Deals</h3>
@@ -28,7 +28,7 @@ function Landing() {
                 })}
             
             </div>
-        </Container>
+        </div>
         
     )
 }
