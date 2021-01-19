@@ -5,7 +5,8 @@ import validator from 'validator'
 interface User extends Document {
     name: string,
     email: string,
-    password: string
+    password: string,
+    avatar: Buffer
 }
 
 const userSchema = new mongoose.Schema({
@@ -30,6 +31,9 @@ const userSchema = new mongoose.Schema({
         minlength: 7,
         required: true,
         trim: true
+    },
+    avatar: {
+        type:Buffer
     }
     
 },{timestamps:true})
