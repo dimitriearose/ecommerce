@@ -19,7 +19,7 @@ function Navbar() {
                 <Link to='/'>Deals</Link>
                 <Link to='/'>New Arrival</Link>
                 <Link to='/'>Cart</Link>
-           <button>Log Out</button>
+           <button className="btn btn-dark">Log Out</button>
             </div>
         </div>
     )
