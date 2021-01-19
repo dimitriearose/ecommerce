@@ -1,0 +1,10 @@
+.product {
+  max-width: 400px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  //   text-align: center;
+
+  & img {
+    max-width: 100%;
+  }
+}

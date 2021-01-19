@@ -6,18 +6,19 @@ function Navbar() {
     return (
         <div className="navbar">
             <div className="navbar__left">
-                <h4>Pandora's Archive</h4>
+                <h4 className='navbar__left__logo'>Coursify</h4>
             </div>
             <div className="navbar__middle">
-                <form action="">
+                <form className='navbar__middle__form'>
                     <input type="text" placeholder="Search..."/>
-                    <Search />
+                    <Search className='navbar__middle__search__icon' />
                 </form>
             </div>
             <div className="navbar__right">
                 <Link to='/'>Your Account</Link>
                 <Link to='/'>Deals</Link>
                 <Link to='/'>New Arrival</Link>
+                <Link to='/'>Cart</Link>
            <button>Log Out</button>
             </div>
         </div>

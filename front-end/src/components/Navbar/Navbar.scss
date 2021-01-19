@@ -1,0 +1,30 @@
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  &__left {
+    &__logo {
+      font-size: 24px;
+    }
+  }
+  &__middle {
+    &__form {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.navbar__right {
+  & > a {
+    margin: 0 10px 0 0;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
