@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Landing from './components/Landing/Landing'
 import NVBR from './components/Navbar/Navbar'
 import FTR from './components/Footer/Footer'
+import SNUP from './components/Signup/Signup'
 import './App.scss'
 
 const App = () => {
@@ -17,7 +18,14 @@ const App = () => {
             <Landing />
             <FTR />
           </Route>
+
+          <Route path='/signup'>
+            <SNUP/>
+          </Route>
         </Switch>
+
+
+      
       </div>
     </Router>
   )

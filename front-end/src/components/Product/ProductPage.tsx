@@ -1,9 +1,14 @@
+import React from 'react';
+import {Helmet} from 'react-helmet'
 import 'ProductPage.scss'
 
-function ProductPage() {
+const ProductPage = () => {
     return (
-        <div>
-            
+        <div className="productpage">
+            <Helmet>
+                <title>Up</title>
+            </Helmet>
+            <h1>product</h1>
         </div>
     )
 }
