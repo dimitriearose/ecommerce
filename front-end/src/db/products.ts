@@ -7,7 +7,7 @@ const products = [
         "originalprice":4097.99,
         "rating": 5,
         "seller": "TypeScript Nĩgga",
-        "courseimg":"https://images.unsplash.com/photo-1582944682271-172a57ce4b52?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        "courseimg":"https://images.unsplash.com/photo-1573576412044-f93d16318415?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
         "avatar":"https://images.unsplash.com/photo-1582944682271-172a57ce4b52?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         "details":"Improve your life through and semen retension, I will teach you the ways.",
         "fineprint":"Up"

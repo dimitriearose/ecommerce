@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link}from 'react-router-dom'
 import {Avatar} from '@material-ui/core'
+import {Rating} from '@material-ui/lab'
 import './Product.scss'
 
 interface ProductProps {
@@ -21,13 +22,18 @@ interface ProductProps {
 function Product({id,avatar,category,details,fineprint,image,name,originalprice,price,rating,seller}:ProductProps) {
     return (
         <Link to={`/product/${id}`}>
-        <div className='product'>
-            <Avatar src={avatar}/>
-            <img src={image} alt={name} />
-            <p>{category}</p>
-            <p>{details}</p>
-            <p>{fineprint}</p>
-        </div>
+            <div className='product'>
+                <Avatar src={avatar}/>
+                <img src={image} alt={name} />
+                <p>{category}</p>
+                <p>{details}</p>
+                <p>{fineprint}</p>
+                <p>{name}</p>
+                <p>{seller}</p>
+                <Rating value={rating} precision={0.5} />
+                <p>{originalprice}</p>
+                <p>{price}</p>
+            </div>
         </Link>
     )
 }
