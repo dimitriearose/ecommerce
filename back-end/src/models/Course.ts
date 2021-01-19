@@ -22,8 +22,27 @@ const courseSchema = new mongoose.Schema({
     creator:{
         type:mongoose.Schema.Types.ObjectId,
         required:true
+    },
+    img:{
+        type: Buffer,
+        
+    },
+    category:{
+        type: String,
+        required: true
+    },
+    originalprice:{
+        type:Number,
+        required:true
+    },
+    fineprint:{
+        type:String,
+        required:true,
+    },
+    price: {
+        type:Number,
+        required:true
     }
-    img:{},
    
     
 },{timestamps:true})
