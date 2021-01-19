@@ -4,6 +4,7 @@ import NVBR from './components/Navbar/Navbar'
 import FTR from './components/Footer/Footer'
 import SNUP from './components/Signup/Signup'
 import './App.scss'
+import './bootstrap.css'
 
 const App = () => {
   return (
@@ -20,7 +21,11 @@ const App = () => {
           </Route>
 
           <Route path='/signup'>
+          <NVBR/>
+
             <SNUP/>
+          
+
           </Route>
         </Switch>
 
