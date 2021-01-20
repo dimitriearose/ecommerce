@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:true,
         trim: true,
+        unique:true,
         lowercase:true,
         validate: (email:string) => {
             if (!validator.isEmail(email)){
@@ -33,14 +34,14 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     avatar: {
-        type:Buffer
+        type: Buffer
     }
     
 },{timestamps:true})
 
 userSchema.pre<User>('save', async function (next) {
     if (this.isModified('password')){
-        this.password = await bcrypt.hash(this.password,100)
+        this.password = await bcrypt.hash(this.password,12)
     }
     next()
 })

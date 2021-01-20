@@ -14,7 +14,7 @@ function Landing() {
                     <img
                         className="d-block w-100"
                         style={{maxHeight:'600px'}}
-                        src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1389&q=80"
+                        src="https://pbs.twimg.com/media/ErUMaWrVoAAJGA9?format=jpg&name=large"
                         alt="Deals"
                     />
         
