@@ -7,16 +7,32 @@ import {Carousel,Container} from 'react-bootstrap'
 function Landing() {
     return (
         
-        <div className='container-xxl container-fluid' >
-            <Carousel className='mb-4'>
-                    <Carousel.Item>
+        <div className="container__container" style={{maxWidth:'1366px',margin:'auto'}}>
+        <div className='container-xxl' >
+            <Carousel className='mb-4' style={{maxHeight:'600px', overflow:'none'}} >
+                    <Carousel.Item style={{maxHeight:'600px'}} >
                     <img
                         className="d-block w-100"
-                        src="https://images.pexels.com/photos/1114376/pexels-photo-1114376.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                        style={{maxHeight:'600px'}}
+                        src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1389&q=80"
                         alt="Deals"
                     />
+        
                     <Carousel.Caption>
                         <h3>Deals</h3>
+                        <p>Shop New Deals on Premium Courses at Coursify.</p>
+                    </Carousel.Caption>
+                    </Carousel.Item>
+
+                    <Carousel.Item style={{maxHeight:'600px'}}>
+                    <img
+                        className="d-block w-100"
+                        style={{maxHeight:'600px'}}
+                        src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                        alt="Shopping"
+                    />
+                    <Carousel.Caption>
+                        <h3>Shop here</h3>
                         <p>Shop New Deals on Premium Courses at Coursify.</p>
                     </Carousel.Caption>
                     </Carousel.Item>
@@ -27,6 +43,7 @@ function Landing() {
                     return <Product id={product._id} key={product._id} name={product.name} category={product.category} price={product.price} originalprice={product.originalprice} rating={product.rating} seller={product.seller} image={product.courseimg} avatar={product.avatar} details={product.details} fineprint={product.fineprint} />
                 })}
             </div>
+        </div>
         </div>
         
     )
