@@ -2,6 +2,7 @@ import express,{Response,NextFunction} from 'express'
 import User from '../models/User'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import authenticate from '../middleware/auth'
 
 const router =  express.Router()
 
@@ -56,7 +57,6 @@ router.post('/login', async (req,res:Response,next:NextFunction) => {
 
 router.get('/:id', async (req,res:Response,next:NextFunction) => {
     
-
     try {
         const user = await User.findById(req.params.id)
 
@@ -73,25 +73,23 @@ router.get('/:id', async (req,res:Response,next:NextFunction) => {
     }
 })
  
-//! Add Authenticate Middlware 💯💯💯💯💯💯💯
 
-// router.get('/:id', async (req,res:Response,next:NextFunction) => {
+router.get('/:id',authenticate, async (req:any,res:Response,next:NextFunction) => {
     
 
-//     try {
-//         const user = await User.findById(req.params.id)
+    try {
+        const user = await User.findById(req.user._id)
 
 
-//         if (!user) {
-//             return res.status(418).send({message:' Bad Request'})
-//         }
+        if (!user) {
+            return res.status(418).send({message:' Bad Request'})
+        }
 
         
-        
-//         res.send({id:user._id, name:user.name,email:user.email, avatar:user.avatar})
-//     } catch (error) {
-//         res.status(500).send({message:'Server Error'})
-//     }
-// })
+        res.send({id:user._id, name:user.name,email:user.email, avatar:user.avatar})
+    } catch (error) {
+        res.status(500).send({message:'Server Error'})
+    }
+})
 
 export default router

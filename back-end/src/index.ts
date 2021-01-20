@@ -1,5 +1,6 @@
 import express from 'express'
 import userRoutes from './routers/User'
+import courseRoutes from './routers/Course'
 import connect from './db/mongoose'
 
 const app = express()
@@ -8,6 +9,7 @@ connect()
 app.use(express.json())
 
 app.use(userRoutes)
+app.use(courseRoutes)
 
 
 app.listen(3001, () => {
