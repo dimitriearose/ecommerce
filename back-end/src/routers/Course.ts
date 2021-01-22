@@ -13,8 +13,9 @@ router.post('/course', auth,async (req:any,res,next) =>{
         }
 
         await course.save()
-
+        
         res.send({course})
+
     } catch (error) {
         res.status(500).send(error)
     }
