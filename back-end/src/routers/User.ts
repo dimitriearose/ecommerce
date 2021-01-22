@@ -14,7 +14,7 @@ router.post('/', async (req,res:Response,next:NextFunction) => {
 
 
         if (!user) {
-            return res.status(418).send({message:' Bad Request'})
+            return res.status(404).send({message:' Bad Request'})
         }
 
         const token = jwt.sign({id:user._id},'ajfendjnjidwni')
@@ -34,7 +34,6 @@ router.post('/login', async (req,res:Response,next:NextFunction) => {
         const {email,password } = req.body
 
         const user = await User.findOne({email:email})
-
 
         if (!user) {
             return res.status(400).send({message:' Bad Request'})

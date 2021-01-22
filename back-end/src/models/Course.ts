@@ -24,8 +24,7 @@ const courseSchema = new mongoose.Schema({
         required:true
     },
     img:{
-        type: Buffer,
-        
+        type: Buffer,      
     },
     category:{
         type: String,
@@ -38,6 +37,7 @@ const courseSchema = new mongoose.Schema({
     fineprint:{
         type:String,
         required:true,
+        default:'You have 30 days to return this product, if you are not satisfied.'
     },
     price: {
         type:Number,
@@ -46,7 +46,6 @@ const courseSchema = new mongoose.Schema({
    
     
 },{timestamps:true})
-
 
 
 const Course = mongoose.model<Course>('Course', courseSchema)
