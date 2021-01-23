@@ -59,8 +59,8 @@ router.patch('/course/:courseId', auth, async (req, res) => {
 
         await course.save()
         res.send(course)
-    } catch (error) {
-        res.status(500).send(error)
+    } catch (err) {
+        res.status(500).send(err)
     }
 })
 
@@ -74,7 +74,6 @@ router.delete('/course/:courseId', auth, async (req, res) => {
         if (!course) {
             return res.status(400).send("Invalid")
         }
-
 
         await course.remove()
 
