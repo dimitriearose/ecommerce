@@ -3,8 +3,13 @@ import User from '../models/User'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import authenticate from '../middleware/auth'
+import dotenv from 'dotenv'
 
 const router =  express.Router()
+//up rashane
+dotenv.config()
+
+const secret = process.env.JWT as string
 
 router.post('/', async (req,res:Response,next:NextFunction) => {
     
@@ -17,7 +22,7 @@ router.post('/', async (req,res:Response,next:NextFunction) => {
             return res.status(404).send({message:' Bad Request'})
         }
 
-        const token = jwt.sign({id:user._id},'ajfendjnjidwni')
+        const token = jwt.sign({id:user._id},secret,{expiresIn:'15m'})
 
         await user.save()
         
@@ -45,13 +50,28 @@ router.post('/login', async (req,res:Response,next:NextFunction) => {
             return res.status(400).send({message:'Incorrect Credentials Entered'})
         }
         
-        const token = jwt.sign({id:user._id},'ajfendjnjidwni')
+        const token = jwt.sign({id:user._id},secret,{expiresIn:'15m'})
         
         res.send({id:user._id, name:user.name,email:user.email, avatar:user.avatar, token})
     } catch (error) {
         res.status(500).send({message:'Server Error'})
     }
 })
+
+
+router.post('/renewtoken',authenticate, async (req:any,res:Response,next:NextFunction) => {
+    
+    try {
+        const user = req.user
+        
+      const token = jwt.sign({id:req.user._id}, secret,{expiresIn:'15m'})
+
+        res.send({id:user._id, name:user.name,email:user.email, avatar:user.avatar,token})
+    } catch (error) {
+        res.status(500).send({message:'Server Error'})
+    }
+})
+
 
 
 router.get('/:id', async (req,res:Response,next:NextFunction) => {
@@ -73,12 +93,11 @@ router.get('/:id', async (req,res:Response,next:NextFunction) => {
 })
  
 
-router.get('/:id',authenticate, async (req:any,res:Response,next:NextFunction) => {
+router.get('/',authenticate, async (req:any,res:Response,next:NextFunction) => {
     
 
     try {
         const user = await User.findById(req.user._id)
-
 
         if (!user) {
             return res.status(418).send({message:' Bad Request'})

@@ -83,6 +83,35 @@ router.delete('/course/:courseId', auth, async (req, res) => {
     }
 })
 
+router.get('/course/search', auth, async (req, res) => {
+
+    const searchParameter = String(req.query.search)
+    const searchRegex = new RegExp(searchParameter)
+    const page = Number(req.query.page) || 1
+    const coursesPerPage = 20
+    
+    
+    try {
+        const courseId = req.params.courseId
+
+        const courses = await Course.find({name:{$regex:searchRegex}}).limit(coursesPerPage).skip((page - 1 ) * coursesPerPage)
+
+        const courseCount = await Course.find({name:{$regex:searchRegex}}).limit(coursesPerPage).skip((page - 1 ) * coursesPerPage).countDocuments()
+
+        if (!courses) {
+            return res.status(400).send("Invalid")
+        }
+
+        res.send({
+            courses,
+            page,
+            courseCount
+        })
+
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 
 export default router

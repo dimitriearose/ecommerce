@@ -24,6 +24,7 @@ const auth = async (req:any,res:Response,next:NextFunction) => {
     
     
         req.user = user
+        req.token = token
     
         next()
     } catch (error) {
