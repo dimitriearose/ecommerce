@@ -1,53 +1,56 @@
-import mongoose,{Document} from 'mongoose'
-import bcrypt from 'bcryptjs'
-import validator from 'validator'
+import mongoose, { Document } from "mongoose";
+import bcrypt from "bcryptjs";
+import validator from "validator";
 
 interface Course extends Document {
-    name: string,
-    creator: string,
-    img: Buffer,
-    category: string,
-    originalprice: number,
-    price: number,
-    details: string,
-    fineprint: string
+  name: string;
+  creator: string;
+  img: Buffer;
+  category: string;
+  originalprice: number;
+  price: number;
+  details: string;
+  fineprint: string;
 }
 
-const courseSchema = new mongoose.Schema({
+const courseSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
-    creator:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
-    img:{
-        type: Buffer,      
+    img: {
+      type: Buffer,
+      required: true,
     },
-    category:{
-        type: String,
-        required: true
+    category: {
+      type: String,
+      enum: ["music", "beauty", "programming", "other"],
+      required: true,
     },
-    originalprice:{
-        type:Number,
-        required:true
+    originalprice: {
+      type: Number,
+      required: true,
     },
-    fineprint:{
-        type:String,
-        required:true,
-        default:'You have 30 days to return this product, if you are not satisfied.'
+    fineprint: {
+      type: String,
+      required: true,
+      default:
+        "You have 30 days to return this product, if you are not satisfied.",
     },
     price: {
-        type:Number,
-        required:true
-    }
-   
-    
-},{timestamps:true})
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
+const Course = mongoose.model<Course>("Course", courseSchema);
 
-const Course = mongoose.model<Course>('Course', courseSchema)
-
-export default Course
+export default Course;

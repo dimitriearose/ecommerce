@@ -110,4 +110,21 @@ router.get('/',authenticate, async (req:any,res:Response,next:NextFunction) => {
     }
 })
 
+router.delete('/',authenticate, async (req:any,res:Response,next:NextFunction) => {
+    
+    try {
+        const user = req.user
+
+        if (!user) {
+            return res.status(418).send({message:' Bad Request'})
+        }
+
+        await user.remove()
+
+        res.send({id:user._id, name:user.name,email:user.email, avatar:user.avatar})
+    } catch (error) {
+        res.status(500).send({message:'Server Error'})
+    }
+})
+
 export default router
