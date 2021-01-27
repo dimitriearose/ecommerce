@@ -33,8 +33,6 @@ router.post(
   upload.single("image"),
   authenticate,
   async (req: any, res) => {
-    console.log(req)
-
     try {
       const user = req.user
 
@@ -48,10 +46,19 @@ router.post(
       const formFileData = new formdata()
       formFileData.append("image", image)
 
+      const config = {
+        headers: {
+          ...formFileData.getHeaders(),
+        },
+      }
+
       const { data } = await axios.post(
         "https://api.imgbb.com/1/upload",
-        formFileData
+        formFileData,
+        config
       )
+
+      console.log(data)
 
       const course = new Course({
         name,
@@ -60,6 +67,7 @@ router.post(
         originalprice,
         price,
         creator: user._id,
+        img: data.data.url,
       })
 
       if (!course) {
