@@ -3,6 +3,11 @@ import express, { Response } from "express"
 import Course from "../models/Course"
 import sharp from "sharp"
 import multer from "multer"
+import dotenv from "dotenv"
+import axios from "axios"
+import formdata from "form-data"
+
+dotenv.config()
 
 const router = express.Router()
 
@@ -35,7 +40,18 @@ router.post(
 
       const { name, category, fineprint, originalprice, price } = req.body
 
-      const image = await sharp(req.file.buffer).png({ quality: 80 }).toBuffer()
+      const image: Buffer = await sharp(req.file.buffer)
+        .resize({ width: 600, height: 600 })
+        .png({ quality: 80 })
+        .toBuffer()
+
+      const formFileData = new formdata()
+      formFileData.append("image", image)
+
+      const { data } = await axios.post(
+        "https://api.imgbb.com/1/upload",
+        formFileData
+      )
 
       const course = new Course({
         name,
@@ -44,7 +60,6 @@ router.post(
         originalprice,
         price,
         creator: user._id,
-        img: image,
       })
 
       if (!course) {
@@ -60,95 +75,109 @@ router.post(
   }
 )
 
-// router.get("/course/:courseId", auth, async (req: any, res, next) => {
-//   const courseId = req.params.courseId
+router.post("/courses", async (req, res) => {
+  try {
+    const courses = await Course.find({}).limit(20)
 
-//   try {
-//     const course = await Course.findById(courseId)
+    if (!courses) {
+      return res.status(400).send("Invalid")
+    }
 
-//     if (!course) {
-//       return res.status(404).send("Invalid")
-//     }
+    res.send(courses)
+  } catch (error) {
+    res.status(501).send(error)
+  }
+})
 
-//     res.send({ course })
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// })
+router.get("/course/:courseId", authenticate, async (req: any, res, next) => {
+  const courseId = req.params.courseId
 
-// router.patch("/course/:courseId", auth, async (req, res) => {
-//   const { name, category, originalprice, price, details, fineprint } = req.body
+  try {
+    const course = await Course.findById(courseId)
 
-//   try {
-//     const courseId = req.params.courseId
-//     const course = await Course.findById(courseId)
+    if (!course) {
+      return res.status(404).send("Invalid")
+    }
 
-//     if (!course) {
-//       return res.status(400).send("Invalid")
-//     }
+    res.send({ course })
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
-//     course.name = name
-//     course.category = category
-//     course.originalprice = originalprice
-//     course.price = price
-//     course.details = details
-//     course.fineprint = fineprint
+router.patch("/course/:courseId", authenticate, async (req, res) => {
+  const { name, category, originalprice, price, details, fineprint } = req.body
 
-//     await course.save()
-//     res.send(course)
-//   } catch (err) {
-//     res.status(500).send(err)
-//   }
-// })
+  try {
+    const courseId = req.params.courseId
+    const course = await Course.findById(courseId)
 
-// router.delete("/course/:courseId", auth, async (req, res) => {
-//   try {
-//     const courseId = req.params.courseId
+    if (!course) {
+      return res.status(400).send("Invalid")
+    }
 
-//     const course = await Course.findById(courseId)
+    course.name = name
+    course.category = category
+    course.originalprice = originalprice
+    course.price = price
+    course.details = details
+    course.fineprint = fineprint
 
-//     if (!course) {
-//       return res.status(400).send("Invalid")
-//     }
+    await course.save()
+    res.send(course)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
 
-//     await course.remove()
+router.delete("/course/:courseId", authenticate, async (req, res) => {
+  try {
+    const courseId = req.params.courseId
 
-//     res.send(course)
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// })
+    const course = await Course.findById(courseId)
 
-// router.get("/course/search", auth, async (req, res) => {
-//   const searchParameter = String(req.query.search)
-//   const searchRegex = new RegExp(searchParameter)
-//   const page = Number(req.query.page) || 1
-//   const coursesPerPage = 20
+    if (!course) {
+      return res.status(400).send("Invalid")
+    }
 
-//   try {
-//     const courseId = req.params.courseId
+    await course.remove()
 
-//     const courses = await Course.find({ name: { $regex: searchRegex } })
-//       .limit(coursesPerPage)
-//       .skip((page - 1) * coursesPerPage)
+    res.send(course)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
-//     const courseCount = await Course.find({ name: { $regex: searchRegex } })
-//       .limit(coursesPerPage)
-//       .skip((page - 1) * coursesPerPage)
-//       .countDocuments()
+router.get("/course/search", authenticate, async (req, res) => {
+  const searchParameter = String(req.query.search)
+  const searchRegex = new RegExp(searchParameter)
+  const page = Number(req.query.page) || 1
+  const coursesPerPage = 20
 
-//     if (!courses) {
-//       return res.status(400).send("Invalid")
-//     }
+  try {
+    const courseId = req.params.courseId
 
-//     res.send({
-//       courses,
-//       page,
-//       courseCount,
-//     })
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// })
+    const courses = await Course.find({ name: { $regex: searchRegex } })
+      .limit(coursesPerPage)
+      .skip((page - 1) * coursesPerPage)
+
+    const courseCount = await Course.find({ name: { $regex: searchRegex } })
+      .limit(coursesPerPage)
+      .skip((page - 1) * coursesPerPage)
+      .countDocuments()
+
+    if (!courses) {
+      return res.status(400).send("Invalid")
+    }
+
+    res.send({
+      courses,
+      page,
+      courseCount,
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 export default router

@@ -1,10 +1,25 @@
-import React from "react";
-import "./Landing.scss";
-import products from "../../db/products";
-import Product from "../Product/Product";
-import { Carousel } from "react-bootstrap";
+import React, { useEffect, useState } from "react"
+import "./Landing.scss"
+import products from "../../db/products"
+import Product from "../Product/Product"
+import { Carousel } from "react-bootstrap"
+import axios from "axios"
 
 const Landing = () => {
+  const [courses, setCourses] = useState([])
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const { data } = await axios.post("http://localhost:3001/courses")
+
+      setCourses(data)
+    }
+
+    fetchCourses()
+  }, [])
+
+  console.log(courses)
+
   return (
     <div
       className='container__container'
@@ -79,28 +94,28 @@ const Landing = () => {
           </Carousel.Item>
         </Carousel>
         <div className='landing'>
-          {products.map((product) => {
+          {courses.map((course: any) => {
             return (
               <Product
-                id={product._id}
-                key={product._id}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                originalprice={product.originalprice}
-                rating={product.rating}
-                seller={product.seller}
-                image={product.courseimg}
-                avatar={product.avatar}
-                details={product.details}
-                fineprint={product.fineprint}
+                id={course._id}
+                key={course._id}
+                name={course.name}
+                category={course.category}
+                price={course.price}
+                originalprice={course.originalprice}
+                rating={course.rating}
+                seller={course.seller}
+                image={course.courseimg}
+                avatar={course.avatar}
+                details={course.details}
+                fineprint={course.fineprint}
               />
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

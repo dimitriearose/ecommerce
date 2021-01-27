@@ -1,16 +1,16 @@
-import mongoose, { Document } from "mongoose";
-import bcrypt from "bcryptjs";
-import validator from "validator";
+import mongoose, { Document } from "mongoose"
+import bcrypt from "bcryptjs"
+import validator from "validator"
 
 interface Course extends Document {
-  name: string;
-  creator: string;
-  img: Buffer;
-  category: string;
-  originalprice: number;
-  price: number;
-  details: string;
-  fineprint: string;
+  name: string
+  creator: string
+  img: Buffer
+  category: string
+  originalprice: number
+  price: number
+  details: string
+  fineprint: string
 }
 
 const courseSchema = new mongoose.Schema(
@@ -25,7 +25,7 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     img: {
-      type: Buffer,
+      type: String,
       required: true,
     },
     category: {
@@ -49,8 +49,8 @@ const courseSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-const Course = mongoose.model<Course>("Course", courseSchema);
+const Course = mongoose.model<Course>("Course", courseSchema)
 
-export default Course;
+export default Course
