@@ -1,10 +1,9 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Landing from './components/Landing/Landing'
-import NVBR from './components/Navbar/Navbar'
-import FTR from './components/Footer/Footer'
-import SNUP from './components/Signup/Signup'
-import './App.scss'
-import './bootstrap.css'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import Landing from "./components/Landing/Landing"
+import FTR from "./components/Footer/Footer"
+import SNUP from "./components/Signup/Signup"
+import "./App.scss"
+import "./bootstrap.css"
 
 const App = () => {
   return (
@@ -15,22 +14,13 @@ const App = () => {
             <h1>App</h1>
           </Route>
           <Route path='/' exact>
-            <NVBR/>
             <Landing />
             <FTR />
           </Route>
-
           <Route path='/signup'>
-          <NVBR/>
-
-            <SNUP/>
-          
-
+            <SNUP />
           </Route>
         </Switch>
-
-
-      
       </div>
     </Router>
   )

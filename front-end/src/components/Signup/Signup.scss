@@ -1,12 +1,25 @@
-.signup {
+.signup__container {
   display: flex;
-  min-height: 100vh;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.signup {
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
 }
 
 .signup__left {
   width: 50%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .signup__right {
@@ -14,11 +27,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   background-color: #fff;
   color: #333;
-  &__form {
-    input {
-      display: block;
-    }
-  }
+}
+
+.jumbotron {
+  height: 100%;
 }
