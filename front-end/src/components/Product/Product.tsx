@@ -37,7 +37,7 @@ const Product = ({
   return (
     <Card style={{ width: "18rem" }} className='mx-3 mb-4'>
       <Link to={`/product/${id}`}>
-        <Card.Img src={`data:image/png;base64, ${image}`} alt={name} />
+        <Card.Img src={image} alt={name} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Subtitle>{category}</Card.Subtitle>

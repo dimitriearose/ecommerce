@@ -5,11 +5,13 @@ import sharp from "sharp"
 import multer from "multer"
 import dotenv from "dotenv"
 import axios from "axios"
-import formdata from "form-data"
+import FormData from "form-data"
 
 dotenv.config()
 
 const router = express.Router()
+
+const apiKey = process.env.IMG_KEY as string
 
 const upload = multer({
   fileFilter: (req, file, cb) => {
@@ -36,38 +38,35 @@ router.post(
     try {
       const user = req.user
 
-      const { name, category, fineprint, originalprice, price } = req.body
-
-      const image: Buffer = await sharp(req.file.buffer)
+      const imageToUpload = await sharp(req.file.buffer)
         .resize({ width: 600, height: 600 })
         .png({ quality: 80 })
         .toBuffer()
 
-      const formFileData = new formdata()
-      formFileData.append("image", image)
+      const image = new FormData()
+      image.append("image", imageToUpload)
 
       const config = {
         headers: {
-          ...formFileData.getHeaders(),
+          Authorization: `Client-Id ${apiKey}`,
+          ...image.getHeaders(),
         },
       }
 
-      const { data } = await axios.post(
-        "https://api.imgbb.com/1/upload",
-        formFileData,
+      const response: any = await axios.post(
+        `https://api.imgur.com/3/upload/`,
+        image,
         config
       )
 
-      console.log(data)
+      if (!response) {
+        res.status(400).send({ success: false })
+      }
 
       const course = new Course({
-        name,
-        category,
-        fineprint,
-        originalprice,
-        price,
+        ...req.body,
         creator: user._id,
-        img: data.data.url,
+        img: response.data.data.link,
       })
 
       if (!course) {
@@ -76,9 +75,9 @@ router.post(
 
       await course.save()
 
-      res.send({ message: "Course Created 〽⚜⚜🔯🔯💟💗💜💥💥💦💦💯💯", course })
+      res.send({ message: "Course Created 💯💯", course })
     } catch (error) {
-      res.status(500).send(error)
+      res.status(501).send(error)
     }
   }
 )

@@ -105,7 +105,7 @@ const Landing = () => {
                 originalprice={course.originalprice}
                 rating={course.rating}
                 seller={course.seller}
-                image={course.courseimg}
+                image={course.img}
                 avatar={course.avatar}
                 details={course.details}
                 fineprint={course.fineprint}
