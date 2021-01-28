@@ -22,6 +22,7 @@ const courseSchema = new mongoose.Schema(
     },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     img: {
@@ -46,6 +47,11 @@ const courseSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+    },
+    rating: {
+      type: Number,
+      required: true,
+      default: 5,
     },
   },
   { timestamps: true }

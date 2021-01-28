@@ -84,7 +84,7 @@ router.post(
 
 router.post("/courses", async (req, res) => {
   try {
-    const courses = await Course.find({}).limit(20)
+    const courses = await Course.find({}).populate("creator").limit(20)
 
     if (!courses) {
       return res.status(400).send("Invalid")

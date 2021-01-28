@@ -14,7 +14,7 @@ interface ProductProps {
   price: number
   originalprice: number
   rating: number
-  seller: string
+  creator: string
   image: string
   avatar: string
   details: string
@@ -32,7 +32,7 @@ const Product = ({
   originalprice,
   price,
   rating,
-  seller,
+  creator,
 }: ProductProps) => {
   return (
     <Card style={{ width: "18rem" }} className='mx-3 mb-4'>
@@ -42,7 +42,7 @@ const Product = ({
           <Card.Title>{name}</Card.Title>
           <Card.Subtitle>{category}</Card.Subtitle>
           <Card.Text>{name}</Card.Text>
-          <Card.Text>{seller}</Card.Text>
+          <Card.Text>{creator}</Card.Text>
           <Rating value={rating} precision={0.5} readOnly />
           <Card.Text>
             {currencyFormatter.format(price, { locale: "en-US" })}
