@@ -1,6 +1,6 @@
-export const LOGIN_LOADING = "LOGIN_LOADING"
-export const LOGIN_ERROR = "LOGIN_ERROR"
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+export const SIGNUP_LOADING = "LOGIN_LOADING"
+export const SIGNUP_ERROR = "SIGNUP_ERROR"
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS"
 export const ADD_USER = "ADD_USER"
 export const REMOVE_USER = "REMOVE_USER"
 
@@ -23,15 +23,17 @@ export const userReducer = (state: any, action: any) => {
   }
 }
 
-export const loginReducer = (state: any, action: any) => {
+export const signUpReducer = (state: any, action: any) => {
   switch (action.type) {
-    case LOGIN_LOADING:
+    case SIGNUP_LOADING:
       return {
         ...state,
         loading: true,
+        error: false,
+        success: false,
       }
 
-    case LOGIN_SUCCESS:
+    case SIGNUP_SUCCESS:
       return {
         ...state,
         user: action.payload,
@@ -39,11 +41,12 @@ export const loginReducer = (state: any, action: any) => {
         error: false,
       }
 
-    case LOGIN_ERROR:
+    case SIGNUP_ERROR:
       return {
         ...state,
         error: action.payload,
         loading: false,
+        success: false,
       }
 
     default:

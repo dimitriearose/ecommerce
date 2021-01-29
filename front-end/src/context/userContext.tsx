@@ -1,11 +1,11 @@
 import { createContext, useReducer } from "react"
 import axios from "axios"
 import {
-  LOGIN_LOADING,
-  LOGIN_SUCCESS,
-  LOGIN_ERROR,
+  SIGNUP_ERROR,
+  SIGNUP_LOADING,
+  SIGNUP_SUCCESS,
   userReducer,
-  loginReducer,
+  signUpReducer,
   ADD_USER,
   REMOVE_USER,
 } from "./reducers"
@@ -19,6 +19,12 @@ const UserContext = createContext({
   removeUser: () => {},
   userState: { user: userFromLS },
   signup: (user: any) => {},
+  signUpState: {
+    loading: false,
+    user: null,
+    error: false,
+    success: false,
+  },
 })
 
 const userInitialState = {
@@ -29,6 +35,7 @@ const loginInitialState = {
   loading: false,
   user: null,
   error: false,
+  success: false,
 }
 
 interface Props {
@@ -37,8 +44,8 @@ interface Props {
 
 export const UserProvider = ({ children }: Props) => {
   const [userState, userDispatch] = useReducer(userReducer, userInitialState)
-  const [loginState, loginDispatch] = useReducer(
-    loginReducer,
+  const [signUpState, signUpDispatch] = useReducer(
+    signUpReducer,
     loginInitialState
   )
 
@@ -58,7 +65,7 @@ export const UserProvider = ({ children }: Props) => {
     password: string
   }) => {
     try {
-      loginDispatch({ type: LOGIN_LOADING })
+      signUpDispatch({ type: SIGNUP_LOADING })
 
       const { data } = await axios.post("http://localhost:3001/", user, {
         headers: {
@@ -66,15 +73,21 @@ export const UserProvider = ({ children }: Props) => {
         },
       })
 
-      loginDispatch({ type: LOGIN_SUCCESS, payload: data })
+      signUpDispatch({ type: SIGNUP_SUCCESS, payload: data })
+
+      console.log(data)
+
       addUser(data)
     } catch (error) {
-      loginDispatch({ type: LOGIN_ERROR })
+      console.log("error", error)
+
+      signUpDispatch({ type: SIGNUP_ERROR, payload: error })
     }
   }
 
   return (
-    <UserContext.Provider value={{ addUser, removeUser, userState, signup }}>
+    <UserContext.Provider
+      value={{ addUser, removeUser, userState, signup, signUpState }}>
       {children}
     </UserContext.Provider>
   )
