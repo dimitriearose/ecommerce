@@ -39,6 +39,7 @@ export const signUpReducer = (state: any, action: any) => {
         user: action.payload,
         loading: false,
         error: false,
+        success: true,
       }
 
     case SIGNUP_ERROR:

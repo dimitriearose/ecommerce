@@ -24,17 +24,17 @@ const Signup = () => {
       validator.isEmail(email) &&
       name.trim().length > 1
     ) {
-      signup({ name, email, password })
+      const res = signup({ name, email, password })
 
       setName("")
       setEmail("")
       setPassword("")
 
-      if (signUpState?.success) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (res) {
           history.push("/")
-        }, 500)
-      }
+        }
+      }, 5000)
     }
   }
 

@@ -18,7 +18,7 @@ const UserContext = createContext({
   addUser: (user: any) => {},
   removeUser: () => {},
   userState: { user: userFromLS },
-  signup: (user: any) => {},
+  signup: (user: any) => true as any,
   signUpState: {
     loading: false,
     user: null,
@@ -78,10 +78,14 @@ export const UserProvider = ({ children }: Props) => {
       console.log(data)
 
       addUser(data)
+
+      return true
     } catch (error) {
       console.log("error", error)
 
       signUpDispatch({ type: SIGNUP_ERROR, payload: error })
+
+      return false
     }
   }
 

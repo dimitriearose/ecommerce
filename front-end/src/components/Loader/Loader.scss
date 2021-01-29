@@ -2,8 +2,8 @@
   color: official;
   display: block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   margin: auto;
 }
 .loader div {
@@ -19,7 +19,7 @@
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #fff;
+  background: #444;
 }
 .loader div:nth-child(1) {
   transform: rotate(0deg);
