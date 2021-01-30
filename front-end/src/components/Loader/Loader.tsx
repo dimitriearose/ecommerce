@@ -3,16 +3,7 @@ import "./Loader.scss"
 
 var Loader = () => {
   return (
-    <div className='loader'>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className='lds-facebook'>
       <div></div>
       <div></div>
       <div></div>

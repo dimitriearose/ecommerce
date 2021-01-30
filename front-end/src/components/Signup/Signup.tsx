@@ -6,6 +6,7 @@ import { Form, Button, Jumbotron } from "react-bootstrap"
 import Navbar from "../Navbar/Navbar"
 import UserContext from "../../context/userContext"
 import Loader from "../Loader/Loader"
+import { Helmet } from "react-helmet"
 
 const Signup = () => {
   const [name, setName] = useState("")
@@ -34,12 +35,15 @@ const Signup = () => {
         if (res) {
           history.push("/")
         }
-      }, 5000)
+      }, 1000)
     }
   }
 
   return (
     <div className='signup'>
+      <Helmet>
+        <title>Coursify - Sign Up</title>
+      </Helmet>
       <Navbar />
 
       <div className='signup__container'>
