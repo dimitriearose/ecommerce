@@ -9,6 +9,10 @@ export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS"
 export const ADD_USER = "ADD_USER"
 export const REMOVE_USER = "REMOVE_USER"
 
+export const COURSE_CREATE_LOADING = "COURSE_CREATE_LOADING"
+export const COURSE_CREATE_SUCCESS = "COURSE_CREATE_SUCCESS"
+export const COURSE_CREATE_ERROR = "COURSE_CREATE_ERROR"
+
 export const userReducer = (state: any, action: any) => {
   switch (action.type) {
     case ADD_USER:
@@ -86,6 +90,41 @@ export const signInReducer = (
       }
 
     case SIGNIN_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        success: false,
+      }
+
+    default:
+      return state
+  }
+}
+
+export const courseCreateReducer = (
+  state: any,
+  action: { type: string; payload?: any }
+) => {
+  switch (action.type) {
+    case COURSE_CREATE_LOADING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        success: false,
+      }
+
+    case COURSE_CREATE_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
+        error: false,
+        success: true,
+      }
+
+    case COURSE_CREATE_ERROR:
       return {
         ...state,
         error: action.payload,

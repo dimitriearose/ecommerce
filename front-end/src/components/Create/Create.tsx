@@ -1,44 +1,101 @@
+import { useState, useContext } from "react"
 import "./Create.scss"
 import Navbar from "../Navbar/Navbar"
 import { Helmet } from "react-helmet"
 import { Form, Button } from "react-bootstrap"
+import axios from "axios"
+import userContext from "../../context/userContext"
 
 const Create = () => {
+  const [name, setName] = useState("")
+  const [originalPrice, setOriginalPrice] = useState("")
+  const [price, setPrice] = useState("")
+  const [fineprint, setFineprint] = useState("")
+  const [category, setCategory] = useState("beauty")
+  const [file, setFile] = useState<any>(null)
+
+  const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  const { createCourse, userState } = useContext(userContext)
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (
+      name.trim().length > 1 &&
+      originalPrice.trim() &&
+      file &&
+      category &&
+      fineprint &&
+      price
+    ) {
+      createCourse(
+        { name, originalPrice, price, fineprint, category, file },
+        userState.user.token
+      )
+    }
+  }
+
   return (
     <div className='create'>
       <Helmet>
         <title>Courseify - Upload Course</title>
       </Helmet>
       <Navbar />
-      <Form>
-        <Form.Group controlId='formBasicEmail'>
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type='email' placeholder='Enter email' />
+      <Form onSubmit={onSubmit}>
+        <Form.Group controlId='name'>
+          <Form.Label>Course Name</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Enter Course Name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <Form.Text className='text-muted'>
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
 
-        <Form.Group controlId='formBasicPassword'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control type='password' placeholder='Password' />
-        </Form.Group>
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group controlId='number'>
           <Form.Label>Original price</Form.Label>
-          <Form.Control type='number' placeholder='Password' />
-        </Form.Group>
-        <Form.Group controlId='o'>
-          <Form.Label>Price</Form.Label>
-          <Form.Control type='number' placeholder='Original Price' />
-        </Form.Group>
-        <Form.Group controlId='formBasicPassword'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control type='password' placeholder='Password' />
+          <Form.Control
+            type='number'
+            placeholder='Original Price'
+            value={originalPrice}
+            onChange={(e) => setOriginalPrice(e.target.value)}
+          />
         </Form.Group>
 
-        <Form.Group controlId='exampleForm.ControlSelect1'>
+        <Form.Group controlId='originalPrice'>
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type='number'
+            placeholder='Price'
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId='fineprint'>
+          <Form.Label>Fineprint</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Fineprint'
+            value={fineprint}
+            onChange={(e) => setFineprint(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group controlId='select'>
           <Form.Label>Category</Form.Label>
-          <Form.Control as='select'>
+          <Form.Control
+            as='select'
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}>
             <option value='beauty'>Beauty</option>
             <option value='programming'>Programming</option>
             <option value='music'>Music</option>
@@ -47,7 +104,12 @@ const Create = () => {
         </Form.Group>
 
         <Form.Group>
-          <Form.File id='exampleFormControlFile1' label='Example file input' />
+          <Form.File
+            id='file'
+            label='Example file input'
+            onChange={onFileUpload}
+            accept='image/*'
+          />
         </Form.Group>
 
         <Button variant='primary' type='submit'>

@@ -18,9 +18,11 @@ const NVBR = () => {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto' />
-        <Nav.Link>
-          <Link to='/create'> Upload Course </Link>
-        </Nav.Link>
+        {userState.user?.email && (
+          <Nav.Link>
+            <Link to='/create'>Upload Course</Link>
+          </Nav.Link>
+        )}
         <Nav.Link>
           {userState.user?.email ? (
             userState.user?.name

@@ -12,6 +12,10 @@ import {
   SIGNIN_LOADING,
   SIGNIN_SUCCESS,
   signInReducer,
+  COURSE_CREATE_ERROR,
+  COURSE_CREATE_LOADING,
+  COURSE_CREATE_SUCCESS,
+  courseCreateReducer,
 } from "./reducers"
 
 const userFromLS = localStorage.getItem("user")
@@ -36,7 +40,14 @@ const UserContext = createContext({
     error: false,
     success: false,
   },
+  createCourseState: {
+    loading: false,
+    user: null,
+    error: false,
+    success: false,
+  },
   logout: () => {},
+  createCourse: (course: any, token: string) => true as any,
 })
 
 const userInitialState = {
@@ -57,6 +68,13 @@ const signInInitialState = {
   success: false,
 }
 
+const courseCreateInitialState = {
+  loading: false,
+  user: null,
+  error: false,
+  success: false,
+}
+
 interface Props {
   children: any
 }
@@ -70,6 +88,10 @@ export const UserProvider = ({ children }: Props) => {
   const [signInState, signInDispatch] = useReducer(
     signInReducer,
     signInInitialState
+  )
+  const [createCourseState, createCourseDispatch] = useReducer(
+    courseCreateReducer,
+    courseCreateInitialState
   )
 
   const addUser = (user: any) => {
@@ -140,6 +162,53 @@ export const UserProvider = ({ children }: Props) => {
     removeUser()
   }
 
+  const createCourse = async (
+    course: {
+      name: string
+      originalPrice: string
+      price: string
+      fineprint: string
+      category: string
+      file: File
+    },
+    token: string
+  ) => {
+    try {
+      createCourseDispatch({ type: COURSE_CREATE_LOADING })
+
+      console.log(course)
+      console.log(token)
+
+      const formData = new FormData()
+      formData.append("image", course.file)
+      formData.append("name", course.name)
+      formData.append("category", course.category)
+      formData.append("fineprint", course.fineprint)
+      formData.append("price", course.price)
+      formData.append("originalprice", course.originalPrice)
+
+      const { data } = await axios.post(
+        "http://localhost:3001/course",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      createCourseDispatch({ type: COURSE_CREATE_SUCCESS, payload: data })
+
+      return true
+    } catch (error) {
+      console.log("error", error)
+
+      createCourseDispatch({ type: COURSE_CREATE_ERROR, payload: error })
+
+      return false
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -151,6 +220,8 @@ export const UserProvider = ({ children }: Props) => {
         signInState,
         signUpState,
         logout,
+        createCourse,
+        createCourseState,
       }}>
       {children}
     </UserContext.Provider>

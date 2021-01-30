@@ -26,7 +26,7 @@ const upload = multer({
     }
   },
   limits: {
-    fileSize: 1024 * 1024,
+    fileSize: 1024 * 1024 * 3,
   },
 })
 
@@ -37,6 +37,11 @@ router.post(
   async (req: any, res) => {
     try {
       const user = req.user
+
+      req.body.price = Number(req.body.price)
+      req.body.originalprice = Number(req.body.originalprice)
+
+      console.log(req.body)
 
       const imageToUpload = await sharp(req.file.buffer)
         .resize({ width: 600, height: 600 })
