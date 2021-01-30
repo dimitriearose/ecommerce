@@ -1,32 +1,25 @@
 import React, { useState, useContext } from "react"
 import { useHistory, Link } from "react-router-dom"
 import validator from "validator"
-import "./Signup.scss"
+import "./Signin.scss"
 import { Form, Button, Jumbotron } from "react-bootstrap"
 import Navbar from "../Navbar/Navbar"
 import UserContext from "../../context/userContext"
 import Loader from "../Loader/Loader"
 
 const Signup = () => {
-  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { signup, signUpState } = useContext(UserContext)
+  const { signInState, signin } = useContext(UserContext)
 
   const history = useHistory()
 
-  console.log(signUpState)
+  console.log(signInState)
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (
-      password.trim().length >= 7 &&
-      validator.isEmail(email) &&
-      name.trim().length > 1
-    ) {
-      const res = signup({ name, email, password })
-
-      setName("")
+    if (validator.isEmail(email)) {
+      const res = signin({ email, password })
       setEmail("")
       setPassword("")
 
@@ -50,25 +43,16 @@ const Signup = () => {
             <p>
               <Button variant='primary'>Learn more</Button>
             </p>
-            <p>Already Have an Account?</p>
-            <Link to='/signin'>Login</Link>
+            <p>New to Coursify?</p>
+            <Link to='/signup'>Sign Up</Link>
           </Jumbotron>
         </div>
         <div className='mx-auto flex-col signup__right'>
-          {signUpState?.loading && <Loader />}
-          {signUpState?.error && <p>An Error Occured</p>}
-          {signUpState?.success && <p>Successfully Signed Up</p>}
+          {signInState?.loading && <Loader />}
+          {signInState?.error && <p>An Error Occured</p>}
+          {signInState?.success && <p>Successfully Signed In</p>}
 
           <Form onSubmit={onSubmit}>
-            <Form.Group controlId='formBasicName'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                placeholder='name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
-
             <Form.Group controlId='formBasicEmail'>
               <Form.Label>Email address</Form.Label>
               <Form.Control

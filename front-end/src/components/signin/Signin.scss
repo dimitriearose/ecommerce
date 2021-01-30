@@ -1,0 +1,38 @@
+.signup__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.signup {
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+
+.signup__left {
+  width: 50%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup__right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #333;
+}
+
+.jumbotron {
+  height: 100%;
+}
