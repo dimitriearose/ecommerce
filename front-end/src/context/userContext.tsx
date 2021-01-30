@@ -36,6 +36,7 @@ const UserContext = createContext({
     error: false,
     success: false,
   },
+  logout: () => {},
 })
 
 const userInitialState = {
@@ -136,7 +137,7 @@ export const UserProvider = ({ children }: Props) => {
   }
 
   const logout = () => {
-    localStorage.removeItem("user")
+    removeUser()
   }
 
   return (
@@ -149,6 +150,7 @@ export const UserProvider = ({ children }: Props) => {
         signin,
         signInState,
         signUpState,
+        logout,
       }}>
       {children}
     </UserContext.Provider>
