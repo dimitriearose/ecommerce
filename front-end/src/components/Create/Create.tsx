@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet"
 import { Form, Button } from "react-bootstrap"
 import axios from "axios"
 import userContext from "../../context/userContext"
+import { useHistory } from "react-router-dom"
 
 const Create = () => {
   const [name, setName] = useState("")
@@ -14,13 +15,15 @@ const Create = () => {
   const [category, setCategory] = useState("beauty")
   const [file, setFile] = useState<any>(null)
 
+  const history = useHistory()
+
   const onFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0])
     }
   }
 
-  const { createCourse, userState } = useContext(userContext)
+  const { createCourse, userState, createCourseState } = useContext(userContext)
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -33,10 +36,16 @@ const Create = () => {
       fineprint &&
       price
     ) {
-      createCourse(
+      const res = createCourse(
         { name, originalPrice, price, fineprint, category, file },
         userState.user.token
       )
+
+      setTimeout(() => {
+        if (res) {
+          history.push("/")
+        }
+      }, 1000)
     }
   }
 
