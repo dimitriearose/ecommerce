@@ -21,7 +21,6 @@ const App = () => {
             <Landing />
             <FTR />
           </Route>
-
           <Route path='/signup'>
             <SNUP />
           </Route>
