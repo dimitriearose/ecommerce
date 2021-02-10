@@ -19,8 +19,6 @@ const Landing = () => {
     fetchCourses()
   }, [])
 
-  console.log(courses)
-
   return (
     <>
       <Navbar />

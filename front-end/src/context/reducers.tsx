@@ -13,6 +13,10 @@ export const COURSE_CREATE_LOADING = "COURSE_CREATE_LOADING"
 export const COURSE_CREATE_SUCCESS = "COURSE_CREATE_SUCCESS"
 export const COURSE_CREATE_ERROR = "COURSE_CREATE_ERROR"
 
+export const COURSE_FETCH_LOADING = "COURSE_FETCH_LOADING"
+export const COURSE_FETCH_SUCCESS = "COURSE_FETCH_SUCCESS"
+export const COURSE_FETCH_ERROR = "COURSE_FETCH_ERROR"
+
 export const userReducer = (state: any, action: any) => {
   switch (action.type) {
     case ADD_USER:
@@ -125,6 +129,41 @@ export const courseCreateReducer = (
       }
 
     case COURSE_CREATE_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        success: false,
+      }
+
+    default:
+      return state
+  }
+}
+
+export const fetchCourseReducer = (
+  state: any,
+  action: { type: string; payload?: any }
+) => {
+  switch (action.type) {
+    case COURSE_FETCH_LOADING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        success: false,
+      }
+
+    case COURSE_FETCH_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
+        error: false,
+        success: true,
+      }
+
+    case COURSE_FETCH_ERROR:
       return {
         ...state,
         error: action.payload,

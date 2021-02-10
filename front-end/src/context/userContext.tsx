@@ -16,6 +16,10 @@ import {
   COURSE_CREATE_LOADING,
   COURSE_CREATE_SUCCESS,
   courseCreateReducer,
+  COURSE_FETCH_ERROR,
+  COURSE_FETCH_LOADING,
+  COURSE_FETCH_SUCCESS,
+  fetchCourseReducer,
 } from "./reducers"
 
 const userFromLS = localStorage.getItem("user")
@@ -48,6 +52,7 @@ const UserContext = createContext({
   },
   logout: () => {},
   createCourse: (course: any, token: string) => true as any,
+  fetchCourse: (id: string, token: string) => {},
 })
 
 const userInitialState = {
@@ -75,6 +80,13 @@ const courseCreateInitialState = {
   success: false,
 }
 
+const courseFetchInitialState = {
+  loading: false,
+  user: null,
+  error: false,
+  success: false,
+}
+
 interface Props {
   children: any
 }
@@ -92,6 +104,11 @@ export const UserProvider = ({ children }: Props) => {
   const [createCourseState, createCourseDispatch] = useReducer(
     courseCreateReducer,
     courseCreateInitialState
+  )
+
+  const [createFetchState, fetchCourseDispatch] = useReducer(
+    fetchCourseReducer,
+    courseFetchInitialState
   )
 
   const addUser = (user: any) => {
@@ -209,6 +226,31 @@ export const UserProvider = ({ children }: Props) => {
     }
   }
 
+  const fetchCourse = async (id: string, token: string) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      fetchCourseDispatch({ type: COURSE_FETCH_LOADING })
+
+      const { data } = await axios.get(
+        `http://localhost:3001/course/${id}`,
+        config
+      )
+
+      fetchCourseDispatch({ type: COURSE_FETCH_SUCCESS, payload: data })
+
+      return data
+    } catch (error) {
+      fetchCourseDispatch({ type: COURSE_FETCH_ERROR, payload: error })
+
+      return false
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -222,6 +264,7 @@ export const UserProvider = ({ children }: Props) => {
         logout,
         createCourse,
         createCourseState,
+        fetchCourse,
       }}>
       {children}
     </UserContext.Provider>

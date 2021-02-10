@@ -64,9 +64,6 @@ const Create = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Form.Text className='text-muted'>
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group controlId='number'>

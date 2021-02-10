@@ -6,6 +6,7 @@ import SignIn from "./components/signin/Signin"
 import Create from "./components/Create/Create"
 import "./App.scss"
 import "./bootstrap.css"
+import ProductPage from "./components/Product/ProductPage"
 
 const App = () => {
   return (
@@ -13,12 +14,14 @@ const App = () => {
       <div className='app'>
         <Switch>
           <Route path='/product/:id'>
-            <h1>App</h1>
+            <ProductPage />
           </Route>
+
           <Route path='/' exact>
             <Landing />
             <FTR />
           </Route>
+
           <Route path='/signup'>
             <SNUP />
           </Route>
